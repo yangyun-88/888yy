@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    div {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        cursor: pointer;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+</style>
+
+<body>
+    <div></div>
+    <script src="jquery-1.7.2.js"></script>
+    <script>
+        $('div').mousedown(function (e) {
+            // e.pageX
+            console.log(e.pageX)
+            var hezi = $(this).offset();
+            console.log(hezi)
+            var heng = e.pageX - hezi.left;
+            var shu = e.pageY - hezi.top;
+            //alert(heng)
+            // alert(hezi.left);
+            $(document).mousemove(function (e) {
+                var x = e.pageX - heng;
+                var y = e.pageY - shu;
+                if (x < 0) {
+                    x = 0;
+                } else if (x > $(document).width() - $('div').outerWidth(true)) {
+                    x = $(document).width() - $('div').outerWidth(true);
+                }
+                if (y < 0) {
+                    y = 0;
+                } else if (y > $(document).height() - $('div').outerHeight(true)) {
+                    y = $(document).height() - $('div').outerHeight(true);
+                }
+                $('div').css({
+                    'left': x + 'px',
+                    'top': y + 'px'
+                });
+            });
+            $(document).mouseup(function () {
+                $(document).off('mousemove');
+            });
+        });
+    </script>
+</body>
+</html>
